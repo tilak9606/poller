@@ -1,0 +1,17 @@
+servces:
+  mongodb:
+    image: mongo:latest
+    container_name: poller-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: poller_database
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
+    name: poller_mongodb_data
