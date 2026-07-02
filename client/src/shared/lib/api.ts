@@ -10,8 +10,7 @@ export function setAuthTokenGetter(getter: TokenGetter | null) {
 
 export const api = axios.create({
     baseURL:
-        import.meta.env.VITE_SERVER_URL ||
-        "https://pollnode-backend.sameerbhagtani.dev",
+        import.meta.env.VITE_SERVER_URL,
     withCredentials: true,
 });
 

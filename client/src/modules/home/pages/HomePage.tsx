@@ -7,7 +7,6 @@ import {
     Zap, 
     LayoutDashboard, 
     CheckCircle2,
-    Users,
     Clock,
     Shield,
     Globe,
@@ -20,26 +19,6 @@ import {
 import { Button } from "../../../shared/components/Button";
 import { useAuth, SignInButton, SignUpButton } from "@clerk/react";
 
-function useCountUp(end: number, duration = 2000) {
-    const [count, setCount] = useState(0);
-    const countRef = useRef(0);
-    const startTimeRef = useRef<number | null>(null);
-
-    useEffect(() => {
-        const animate = (timestamp: number) => {
-            if (!startTimeRef.current) startTimeRef.current = timestamp;
-            const progress = Math.min((timestamp - startTimeRef.current) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            countRef.current = Math.floor(eased * end);
-            setCount(countRef.current);
-            if (progress < 1) requestAnimationFrame(animate);
-        };
-        requestAnimationFrame(animate);
-        return () => { startTimeRef.current = null; };
-    }, [end, duration]);
-
-    return count;
-}
 
 function FloatingParticles() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -107,17 +86,6 @@ function FloatingParticles() {
     );
 }
 
-function StatCounter({ value, label, suffix = "" }: { value: number; label: string; suffix?: string }) {
-    const count = useCountUp(value);
-    return (
-        <div className="text-center animate-slide-up">
-            <div className="text-3xl md:text-4xl font-bold text-gradient mb-1">
-                {count.toLocaleString()}{suffix}
-            </div>
-            <div className="text-sm text-[#64748b]">{label}</div>
-        </div>
-    );
-}
 
 function FeatureCard({ 
     icon, 
@@ -188,30 +156,6 @@ function StepCard({
     );
 }
 
-function TestimonialCard({ quote, author, role, delay = 0 }: { quote: string; author: string; role: string; delay?: number }) {
-    return (
-        <div 
-            className="glass-card p-6 animate-slide-up"
-            style={{ animationDelay: `${delay}ms`, animationFillMode: 'both' }}
-        >
-            <div className="flex gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                    <Sparkles key={i} className="w-4 h-4 text-[#fbbf24]" />
-                ))}
-            </div>
-            <p className="text-[#cbd5e1] text-sm leading-relaxed mb-4 italic">"{quote}"</p>
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#6366f1] to-[#ec4899] flex items-center justify-center text-white font-semibold text-sm">
-                    {author.split(' ').map(n => n[0]).join('')}
-                </div>
-                <div>
-                    <div className="text-white text-sm font-medium">{author}</div>
-                    <div className="text-[#64748b] text-xs">{role}</div>
-                </div>
-            </div>
-        </div>
-    );
-}
 
 export default function HomePage() {
     const { isSignedIn } = useAuth();

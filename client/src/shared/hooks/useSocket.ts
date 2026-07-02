@@ -3,8 +3,7 @@ import { io, Socket } from "socket.io-client";
 import { useAuth } from "@clerk/react";
 
 const SERVER_URL =
-    import.meta.env.VITE_SERVER_URL ||
-    "https://pollnode-backend.sameerbhagtani.dev";
+    import.meta.env.VITE_SERVER_URL;
 
 interface UseSocketOptions {
     pollId?: string;
