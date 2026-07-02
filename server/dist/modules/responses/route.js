@@ -1,0 +1,8 @@
+import { Router } from "express";
+import validate from "../../common/middlewares/validate.js";
+import { postResponseSchema } from "./schemas.js";
+import { handlePostResponse } from "./controller.js";
+const router = Router({ mergeParams: true });
+router.post("/", validate(postResponseSchema), handlePostResponse);
+export default router;
+//# sourceMappingURL=route.js.map

@@ -1,0 +1,16 @@
+import User from "./model.js";
+import { getAuth } from "@clerk/express";
+import ApiError from "../../common/utils/ApiError.js";
+import ApiResponse from "../../common/utils/ApiResponse.js";
+export async function getCurrentUser(req, res, next) {
+    const { userId } = getAuth(req);
+    if (!userId) {
+        throw ApiError.unauthorized();
+    }
+    let user = await User.findOne({ clerkUserId: userId });
+    if (!user) {
+        user = await User.create({ clerkUserId: userId });
+    }
+    return ApiResponse.success(res, "User retrieved successfully", { user });
+}
+//# sourceMappingURL=controller.js.map
